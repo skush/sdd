@@ -8,8 +8,7 @@ description: >
   flowchart per UI-touching §4 user story (happy + alt/error branches from §5 ACs), a screen
   inventory (SCR-NN ids), and an AC→flow map, written to docs/features/{slug}/ux-flows.md.
   Triggers on "ux flows for {slug}", "user flows for {slug}", "screen flow for {slug}",
-  "/sdd:ux-flows {slug}", "юзер-флоу для {slug}", "потік екранів {slug}",
-  "намалюй флоу користувача". Always markdown + mermaid regardless of the design tool; the
+  "/sdd:ux-flows {slug}". Always markdown + mermaid regardless of the design tool; the
   Socratic pass confirms each flow in prose, never raw mermaid. Feeds design (target-surface
   evidence), sequences (SCR alignment), screens (the inventory) and plan-tests (e2e-through-UI
   paths). Hard-refuse if spec.md is missing; skipped for features with no human-facing UI.

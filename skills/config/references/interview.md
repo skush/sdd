@@ -1,7 +1,7 @@
 # The config interview — six questions, three calls, 21 of 25 keys
 
 > **Reference-only.** Read by [`../SKILL.md`](../SKILL.md) steps 3 and 5. Every question here is
-> phrased per [`../../_shared/ask-style.md`](../../_shared/ask-style.md): Ukrainian, action-form
+> phrased per [`../../_shared/ask-style.md`](../../_shared/ask-style.md): English, action-form
 > labels, every technical term glossed inline, the trade-off spelled out in the description.
 > Hosts without a native `AskUserQuestion` ask the same questions as **numbered plain text, one at
 > a time, stop and wait** — same shape, same glosses, nothing skipped.
@@ -14,7 +14,7 @@
   One answer therefore writes several keys, and the `old → new` output names each one.
 - **When the current state matches no option exactly** — the normal case after a host clamp, or
   after someone hand-edited one key of a bundle — do **not** force it into the nearest option.
-  Prepend a «Лишити як є» option that spells out the actual current values of that group,
+  Prepend a «Keep as is» option that spells out the actual current values of that group,
   mark it «(Recommended)», and say in the question text which key is the odd one out. Silently
   re-bundling a hand-edited value back into a preset is the way this skill loses a user's edit.
 
@@ -48,8 +48,8 @@ autodetect».
 > can also just open it in an editor. The cost of tuning now is about six questions.
 > **READ OPTIONS.**
 
-- **«Лишити дефолти» (Recommended)** — Нічого не міняю. Файл `.claude/sdd.local.md` уже лежить у репозиторії з задокументованими значеннями, і кожен ключ у ньому має коментар із поясненням. Пайплайн одразу робочий: питання середньої глибини, документи англійською, TDD увімкнений, коміт після кожної задачі. Повернутись і покрутити можна будь-коли тим самим `/sdd:config`.
-- **«Пройти шість питань»** — Ставлю шість згрупованих питань і після кожної твоєї відповіді патчу відповідні ключі, показуючи `було → стало`. Групи: підтвердження інструмента, рівень моделей, суворість тестів і воріт, режим виконання і комітів, глибина опитувань, мова документів. Твої коментарі й невідомі ключі у файлі лишаються недоторканими. Займає кілька хвилин.
+- **«Keep the defaults» (Recommended)** — I change nothing. The file `.claude/sdd.local.md` is already in the repository with documented values, and every key in it has an explanatory comment. The pipeline works right away: medium-depth questions, documents in English, TDD on, a commit after every task. You can come back and tune it any time with the same `/sdd:config`.
+- **«Go through the six questions»** — I ask six grouped questions and after each answer patch the matching keys, showing `old → new`. The groups: tool confirmation, model tier, test and gate strictness, execution and commit mode, interview depth, document language. Your comments and any unknown keys in the file stay untouched. Takes a few minutes.
 
 ---
 
@@ -57,33 +57,33 @@ autodetect».
 
 ### Q1 — host confirmation
 
-> **CONTEXT.** Два налаштування пайплайна працюють лише в Claude Code: `team_mode` (команда агентів
-> через `TeamCreate`) і `workflow_mode` (динамічний `Workflow`, який паралелить незалежні задачі).
-> У Codex CLI і Cursor цих механізмів немає, тому движок там завжди йде послідовно одним агентом.
-> **WHY IT MATTERS.** Якщо записати їх увімкненими на хості, де їх немає, налаштування виглядатиме
-> робочим, а поводитиметься інакше — і зрозуміє це людина аж на `implement`. Тому підтверджуємо
-> інструмент явно. Ось що я побачив: `<перелічити сигнали з detection.md і на що вони вказують; при
-> суперечливих слідах — назвати суперечність прямо>`. **READ OPTIONS.**
+> **CONTEXT.** Two pipeline settings work only in Claude Code: `team_mode` (an agent team
+> via `TeamCreate`) and `workflow_mode` (a dynamic `Workflow` that parallelises independent tasks).
+> Codex CLI and Cursor don't have these mechanisms, so the engine there always runs sequentially with one agent.
+> **WHY IT MATTERS.** If they're recorded as enabled on a host that lacks them, the setting will look
+> working but behave differently — and the user will only find out at `implement`. So we confirm the
+> tool explicitly. Here is what I saw: `<list the signals from detection.md and what they point to; on
+> conflicting traces — name the conflict directly>`. **READ OPTIONS.**
 
-- **«Claude Code»** — Лишаю питання про режим виконання (Q4) повноцінним: доступні і команда агентів, і Workflow, і паралельність більша за 1. Нічого не затискаю.
-- **«Codex CLI»** — Затискаю `team_mode: false`, `workflow_mode: off`, `max_parallel_agents: 1` і кажу про це окремим рядком у списку «виведено, а не запитано». Це не втрата: послідовний TDD одним агентом — документована база, до якої й так деградують обидва режими. Решта питань лишається без змін.
-- **«Cursor»** — Те саме, що для Codex: ті самі три ключі затиснуті з тієї самої причини, решта питань без змін.
+- **«Claude Code»** — I keep the execution-mode question (Q4) in full: the agent team, Workflow, and parallelism greater than 1 are all available. Nothing is clamped.
+- **«Codex CLI»** — I clamp `team_mode: false`, `workflow_mode: off`, `max_parallel_agents: 1` and say so on a separate line in the «derived, not asked» list. This isn't a loss: sequential single-agent TDD is the documented baseline that both modes degrade to anyway. The other questions stay unchanged.
+- **«Cursor»** — The same as for Codex: the same three keys clamped for the same reason, the other questions unchanged.
 
 ### Q2 — model tier
 
-> **CONTEXT.** Пайплайн запускає два різні типи агентів. Виконавці (`test-author`, `implementer`)
-> пишуть тести й код. Судді (`reviewer`, `critic`, `devils-advocate`, `strategist`, `analyst`)
-> оцінюють: шукають дірки в специфікації, рецензують дифи, атакують ідею. Один ключ `judgment_model`
-> задає рівень моделі одразу всім пʼятьом суддям, а `model_<роль>` — окремо кожному виконавцю.
-> **WHY IT MATTERS.** Питаю прямо, бо сесія принципово не бачить списку моделей, доступних твоєму
-> акаунту: підбір наосліп дав би налаштування, яке падає при першому ж диспатчі. Якщо обрана модель
-> усе-таки недоступна, диспатч один раз повторюється на `inherit` (модель поточної сесії) і не
-> блокує стадію. **READ OPTIONS.**
+> **CONTEXT.** The pipeline runs two different kinds of agents. Executors (`test-author`, `implementer`)
+> write tests and code. Judges (`reviewer`, `critic`, `devils-advocate`, `strategist`, `analyst`)
+> evaluate: they look for holes in the spec, review diffs, attack the idea. One key, `judgment_model`,
+> sets the model tier for all five judges at once, and `model_<role>` sets it for each executor separately.
+> **WHY IT MATTERS.** I ask directly because the session fundamentally can't see the list of models available to your
+> account: guessing blindly would produce a setting that fails on the very first dispatch. If the chosen model
+> is unavailable after all, the dispatch is retried once on `inherit` (the current session's model) and doesn't
+> block the stage. **READ OPTIONS.**
 
-- **«Судді на opus, виконавці на sonnet» (Recommended)** — Дефолт: `judgment_model: opus`, `model_test_author` і `model_implementer` на `sonnet`, `model_reviewer` на `opus`. Логіка проста: судження окупає сильнішу модель, механічне написання тесту — ні. Зусилля (`effort_*`) лишаються `medium` для виконавців і `high` для рецензента, а на великих фічах (L/XL) движок сам піднімає виконавців до `high`. Дефолт `opus` тут це підлога, а не пін: якщо сесія працює на сильнішому рівні, судді підуть на `inherit` замість тихого зниження.
-- **«Усе на sonnet»** — `judgment_model: sonnet` плюс усі три `model_*` на `sonnet`. Це підтримуваний шлях для акаунтів без доступу до Opus: пайплайн проходить повністю, рецензії стають трохи поверховішими. Дешевше й швидше. Якщо в тебе немає Opus, обирай саме це, а не дефолт, бо тоді ти бачиш реальний рівень одразу, а не через деградацію.
-- **«Успадкувати модель сесії»** — `judgment_model` і всі три `model_*` стають `inherit`: кожен агент іде на тій моделі, на якій працює сесія. Ключі `effort_*` при цьому **не змінюються**: `inherit` не входить у їхній набір значень (`low | medium | high | xhigh | max` або число), тож вони лишаються як були — це буде названо в списку «виведено, а не запитано». Найпростіший варіант, коли не хочеш думати про рівні взагалі, і найпередбачуваніший за вартістю. Мінус: судді втрачають окремий важіль, тобто рецензія вже не може бути сильнішою за решту роботи.
-- **«Судді на fable»** — `judgment_model: fable` піднімає всіх пʼятьох суддів на рівень Fable, виконавці лишаються на `sonnet`. Має сенс, коли болить саме якість рецензій і критики специфікацій. Потребує доступу до цього рівня в акаунта, інакше диспатч один раз відкотиться на `inherit`.
+- **«Judges on opus, executors on sonnet» (Recommended)** — The default: `judgment_model: opus`, `model_test_author` and `model_implementer` on `sonnet`, `model_reviewer` on `opus`. The logic is simple: judgment pays for a stronger model, mechanically writing a test doesn't. Effort (`effort_*`) stays `medium` for the executors and `high` for the reviewer, and on large features (L/XL) the engine raises the executors to `high` by itself. The `opus` default here is a floor, not a pin: if the session runs at a stronger tier, the judges go to `inherit` instead of silently downgrading.
+- **«Everything on sonnet»** — `judgment_model: sonnet` plus all three `model_*` on `sonnet`. This is the supported path for accounts without Opus access: the pipeline runs fully, reviews get a bit shallower. Cheaper and faster. If you don't have Opus, pick this rather than the default, because then you see the real tier right away instead of via degradation.
+- **«Inherit the session model»** — `judgment_model` and all three `model_*` become `inherit`: every agent runs on whatever model the session runs on. The `effort_*` keys are **not changed**: `inherit` isn't in their value set (`low | medium | high | xhigh | max` or a number), so they stay as they were — this will be named in the «derived, not asked» list. The simplest option when you don't want to think about tiers at all, and the most predictable in cost. Downside: the judges lose their separate lever, so a review can no longer be stronger than the rest of the work.
+- **«Judges on fable»** — `judgment_model: fable` raises all five judges to the Fable tier, executors stay on `sonnet`. Makes sense when the pain point is specifically the quality of reviews and spec critique. Requires the account to have access to that tier, otherwise the dispatch falls back to `inherit` once.
 
 ---
 
@@ -91,34 +91,34 @@ autodetect».
 
 ### Q3 — strictness and gates
 
-> **CONTEXT.** Після кожної задачі движок проганяє ворота: юніт-тести, інтеграційні (якщо
-> відповідає Docker-демон), lint (перевірка стилю) і vet (статичний аналіз, який ловить підозрілі
-> конструкції без запуску коду). Плюс сам цикл TDD: спершу червоний тест, потім мінімальний код,
-> щоб він позеленів. **WHY IT MATTERS.** Суворіші ворота ловлять більше, але кожен зайвий тир
-> додає часу на задачу і може блокувати роботу в репозиторії, де lint ще не налаштований. Ворота,
-> для яких команда не знайшлася, пропускаються самі, без падіння. **READ OPTIONS.**
+> **CONTEXT.** After each task the engine runs the gates: unit tests, integration tests (if the
+> Docker daemon responds), lint (a style check) and vet (static analysis that catches suspicious
+> constructs without running the code). Plus the TDD cycle itself: a red test first, then the minimal code
+> to turn it green. **WHY IT MATTERS.** Stricter gates catch more, but every extra tier
+> adds time per task and can block work in a repository where lint isn't set up yet. Gates
+> with no command found skip themselves, without failing. **READ OPTIONS.**
 
-- **«Повні ворота, зупинка на червоному» (Recommended)** — `tdd: true`, `stop_on_red: true`, `max_red_retries: 3`, `gate_lint: true`, `gate_vet: true`, `require_integration: auto`. Тест пишеться першим; якщо після трьох спроб він лишається червоним, прогін зупиняється і ти бачиш проблему одразу. Інтеграційні тести запускаються, коли Docker відповідає, і мовчки пропускаються, коли ні. Це дефолт, і в більшості репозиторіїв його нема сенсу міняти.
-- **«Не зупинятись на червоному»** — Те саме, але `stop_on_red: false`. Задача, яка лишилась червоною, відкидається, її залежні автоматично блокуються, а решта гілок DAG продовжує їхати. Корисно на довгому нічному прогоні, де краще зробити 8 задач із 10, ніж стати на другій. Мінус: у кінці треба уважно читати звіт, бо частина роботи не зроблена.
-- **«Легкі ворота»** — `gate_lint: false`, `gate_vet: false`, `require_integration: never`, решта як у дефолті. Лишаються тільки юніт-тести. Має сенс у репозиторії, де lint і статичний аналіз ще не заведені, і кожен прогін інакше сипав би шумом. Ціна очевидна: стиль і статичні помилки ловитиме вже рецензія, а не ворота.
-- **«Без TDD»** — `tdd: false`: движок пише код одразу, без червоного тесту попереду. Швидше, але ти втрачаєш сітку безпеки — саме червоний тест доводить, що тест справді перевіряє те, що треба, а не проходить випадково. Я щоразу попереджатиму про це в банері. Обирай, тільки якщо тести в цьому репозиторії пишуться інакше.
+- **«Full gates, stop on red» (Recommended)** — `tdd: true`, `stop_on_red: true`, `max_red_retries: 3`, `gate_lint: true`, `gate_vet: true`, `require_integration: auto`. The test is written first; if it is still red after three attempts, the run stops and you see the problem right away. Integration tests run when Docker responds and are silently skipped when it doesn't. This is the default, and in most repositories there's no reason to change it.
+- **«Don't stop on red»** — The same, but `stop_on_red: false`. A task that stays red is dropped, its dependents are blocked automatically, and the remaining branches of the DAG keep going. Useful on a long overnight run, where finishing 8 tasks out of 10 beats stopping on the second. Downside: you have to read the report carefully at the end, because part of the work isn't done.
+- **«Light gates»** — `gate_lint: false`, `gate_vet: false`, `require_integration: never`, the rest as in the default. Only unit tests remain. Makes sense in a repository where lint and static analysis aren't set up yet and every run would otherwise spew noise. The price is obvious: style and static errors will be caught by review, not by the gates.
+- **«No TDD»** — `tdd: false`: the engine writes code straight away, without a red test first. Faster, but you lose the safety net — it's the red test that proves the test really checks what it should rather than passing by accident. I'll warn about this in the banner every time. Pick it only if tests in this repository are written differently.
 
 ### Q4 — execution and commits
 
-> **CONTEXT.** `implement` бере `tasks.json`, будує граф залежностей і виконує задачі. Він може йти
-> послідовно одним агентом, командою агентів (`team_mode`) або динамічним Workflow, який паралелить
-> незалежні гілки. Паралельні агенти працюють кожен у своєму git worktree — це окрема робоча копія
-> репозиторію, щоб двоє не правили ті самі файли. **WHY IT MATTERS.** Паралельність економить час
-> на широкому графі й нічого не дає на вузькому, зате завжди ускладнює читання логу. Гранулярність
-> комітів вирішує, наскільки дрібно ти зможеш відкотити роботу потім.
-> `<на не-Claude хості: два перші варіанти недоступні — кажу про це прямо і роблю «Строго
-> послідовно, один потік» першим варіантом із поміткою «(Recommended)», бо це і є фактичний стан
-> після клампу>` **READ OPTIONS.**
+> **CONTEXT.** `implement` takes `tasks.json`, builds the dependency graph and executes the tasks. It can go
+> sequentially with one agent, with an agent team (`team_mode`), or with a dynamic Workflow that parallelises
+> independent branches. Parallel agents each work in their own git worktree — a separate working copy of the
+> repository, so two agents never edit the same files. **WHY IT MATTERS.** Parallelism saves time
+> on a wide graph and gives nothing on a narrow one, but it always makes the log harder to read. Commit
+> granularity decides how finely you'll be able to roll the work back later.
+> `<on a non-Claude host: the first two options are unavailable — say so plainly and make «Strictly
+> sequential, one thread» the first option, marked «(Recommended)», because that is the actual state
+> after the clamp>` **READ OPTIONS.**
 
-- **«Хай движок вирішує сам, коміт на задачу» (Recommended)** — `team_mode: false`, `workflow_mode: auto`, `max_parallel_agents: 3`, `isolation: worktree`, `auto_commit: per_task`, `branch_strategy: feature`. Це дефолт, і назва тут буквальна: режим обирається за формою графа. Вузький ланцюжок задач піде послідовно, а от **широкий незалежний граф піде Workflow і справді підніме до трьох агентів одночасно**, кожного у своєму worktree під `.worktrees/`. Якщо хочеш гарантовано один потік, це наступний варіант, а не цей. Кожна задача закривається окремим комітом із трейлерами `SDD-Task` і `SDD-AC`, робота йде на окремій feature-гілці.
-- **«Команда агентів»** — `team_mode: true`: `test-author` → `implementer` → `reviewer` над графом, координація через спільний список задач, по одному worktree на агента. Найшвидший режим на великій фічі з багатьма незалежними задачами. Мінус: лог стає складнішим для читання, а на вузькому графі виграшу немає взагалі. Працює лише в Claude Code.
-- **«Строго послідовно, один потік»** — `team_mode: false`, `workflow_mode: off`, `max_parallel_agents: 1`, `isolation: inplace`: одна робоча копія, жодних worktree, задачі одна за одною, без винятків. Найпростіше для читання і налагодження, повільніше на широкому графі. Це також те, у що затискається не-Claude хост, тому на Codex і Cursor цей варіант описує реальну поведінку, а не вибір. Обирай, коли хочеш бачити рівно один потік роботи.
-- **«Коміти лишити мені»** — `auto_commit: off` плюс дефолти решти: движок пише код і ганяє ворота, але не комітить нічого. Ти сам вирішуєш, що і як закомітити в кінці. Мінус: пропадають трейлери `SDD-Task` / `SDD-AC`, за якими потім будується трасування «критерій приймання → коміт».
+- **«Let the engine decide, one commit per task» (Recommended)** — `team_mode: false`, `workflow_mode: auto`, `max_parallel_agents: 3`, `isolation: worktree`, `auto_commit: per_task`, `branch_strategy: feature`. This is the default, and the name is literal: the mode is chosen from the shape of the graph. A narrow chain of tasks runs sequentially, but **a wide independent graph runs as a Workflow and really does start up to three agents at once**, each in its own worktree under `.worktrees/`. If you want a guaranteed single thread, pick «Strictly sequential, one thread» below, not this one. Each task is closed by its own commit with `SDD-Task` and `SDD-AC` trailers, and the work goes on a separate feature branch.
+- **«Agent team»** — `team_mode: true`: `test-author` → `implementer` → `reviewer` over the graph, coordinated through a shared task list, one worktree per agent. The fastest mode on a big feature with many independent tasks. Downside: the log gets harder to read, and on a narrow graph there's no gain at all. Works only in Claude Code.
+- **«Strictly sequential, one thread»** — `team_mode: false`, `workflow_mode: off`, `max_parallel_agents: 1`, `isolation: inplace`: one working copy, no worktrees, tasks one after another, no exceptions. The easiest to read and debug, slower on a wide graph. This is also what a non-Claude host is clamped to, so on Codex and Cursor this option describes the actual behaviour rather than a choice. Pick it when you want to see exactly one thread of work.
+- **«Leave commits to me»** — `auto_commit: off` plus the other defaults: the engine writes code and runs the gates but commits nothing. You decide what to commit and how at the end. Downside: you lose the `SDD-Task` / `SDD-AC` trailers that the «acceptance criterion → commit» traceability is later built from.
 
 ---
 
@@ -126,29 +126,30 @@ autodetect».
 
 ### Q5 — interview depth
 
-> **CONTEXT.** Дилер глибини вирішує, скільки питань ставлять `specify`, `clarify` і `design`, і
-> скільки вони вирішують самі. На `easy` скіл бере розумні дефолти й записує їх у відомість
-> припущень, яку ти ветуєш одним рухом; на `hard` він проходить кожне рішення й щоразу показує
-> компроміс. **WHY IT MATTERS.** Це найпомітніше налаштування в щоденній роботі, і воно нічого не
-> прибирає з покриття: усі критерії приймання лишаються обовʼязковими на кожному рівні, міняється
-> тільки кількість питань. Значення тут — це дефолт, який щоразу можна перебити на місці аргументом
+> **CONTEXT.** The depth dial decides how many questions `specify`, `clarify` and `design` ask, and
+> how much they decide on their own. On `easy` the skill takes sensible defaults and records them in an
+> assumptions ledger that you veto in one go; on `hard` it walks every decision and shows the
+> trade-off each time. **WHY IT MATTERS.** This is the most visible setting in day-to-day work, and it
+> removes nothing from coverage: every acceptance criterion stays mandatory at every level, only the
+> number of questions changes. The value here is the default, which you can always override on the spot with the
+> `--depth=` argument. **READ OPTIONS.**
 > `--depth=`. **READ OPTIONS.**
 
-- **«Середня» (Recommended)** — `interview_depth: medium`. Скіл проходить кожне справжнє рішення, але не розжовує очевидне: типово 3-5 питань на етап. Ідеологічні розвилки питає, конвенційні дефолти бере сам і називає їх. Це баланс, з яким працює більшість.
-- **«Легка»** — `interview_depth: easy`. Питаю тільки те, чого не можна вивести з контексту; решту вирішую сам і складаю у відомість припущень, яку ти переглядаєш одним блоком у кінці. Найшвидший прохід. Ризик очевидний: припущення, яке ти не помітив у списку, поїде далі в специфікацію.
-- **«Глибока»** — `interview_depth: hard`. Проходжу кожне рішення, щоразу виношу компроміс на поверхню, на `specify` запускаю повний набір ідеаційних агентів (дослідник ринку, стратег, аналітик, адвокат диявола). Найповніший результат і найдовший діалог. Має сенс на фічі, ціна помилки в якій висока.
+- **«Medium» (Recommended)** — `interview_depth: medium`. The skill walks every real decision but doesn't belabour the obvious: typically 3-5 questions per stage. It asks about genuine forks, takes conventional defaults itself and names them. This is the balance most people work with.
+- **«Easy»** — `interview_depth: easy`. I ask only what can't be inferred from context; I decide the rest myself and collect it in an assumptions ledger you review as one block at the end. The fastest pass. The obvious risk: an assumption you didn't notice in the list travels on into the spec.
+- **«Deep»** — `interview_depth: hard`. I walk every decision, put the trade-off on the surface every time, and on `specify` run the full set of ideation agents (market researcher, strategist, analyst, devil's advocate). The most complete result and the longest dialogue. Worth it on a feature where a mistake is expensive.
 
 ### Q6 — document language
 
-> **CONTEXT.** `artifact_language` задає мову, якою пишеться **проза** документів пайплайна:
-> специфікації, архітектурного документа, ADR, моделі даних, задач, тест-плану, рецензій,
-> чейнджлогу. Структура при цьому завжди лишається англійською — заголовки секцій, ключі
-> frontmatter, вердикти, стани трекера, ключові слова Mermaid, машинні поля `tasks.json` і
-> `openapi.yaml`. **WHY IT MATTERS.** Це вибір для людей, які читатимуть ці документи, а не для
-> інструментів. Правило перебивання просте: мова наявного файла завжди виграє над налаштуванням, а
-> новий файл підлаштовується під сусідів у своїй теці фічі — уже написане ніколи не перекладається
-> заднім числом. **READ OPTIONS.**
+> **CONTEXT.** `artifact_language` sets the language the **prose** of pipeline documents is written in:
+> the spec, the architecture document, ADRs, the data model, tasks, the test plan, reviews, the
+> changelog. The structure always stays English — section headings, frontmatter keys, verdicts,
+> tracker states, Mermaid keywords, the machine fields of `tasks.json` and
+> `openapi.yaml`. **WHY IT MATTERS.** This is a choice for the people who will read these documents,
+> not for the tools. The override rule is simple: an existing file's language always wins over the
+> setting, and a new file matches its neighbours in its feature folder — what's already written is
+> never retro-translated. **READ OPTIONS.**
 
-- **«Англійська» (Recommended)** — `artifact_language: en`. Уся проза англійською. Дефолт, і правильний вибір, якщо документи читатиме хтось поза українськомовною командою або якщо репозиторій уже англомовний.
-- **«Українська»** — `artifact_language: uk`. Проза українською: абзаци, комірки таблиць, підписи на діаграмах, текстові поля `tasks.json`. Заголовки секцій, машинні токени й ключі лишаються англійськими, тому все, що читають скіли й валідатори, працює без змін. Обирай, коли специфікації читає українськомовна команда.
-- **«Інша мова»** — Ключ приймає будь-який мовний тег, не тільки `en` і `uk`. Скажи, який саме, і я запишу його. Правила ті самі: перемикається проза, структура лишається англійською.
+- **«English» (Recommended)** — `artifact_language: en`. All prose in English. The default, and the right choice if anyone outside a single-language team will read these documents, or if the repository is already in English.
+- **«Ukrainian»** — `artifact_language: uk`. Prose in Ukrainian: paragraphs, table cells, diagram labels, the text fields of `tasks.json`. Section headings, machine tokens and keys stay English, so everything the skills and validators read keeps working unchanged. Pick this when the specs are read by a Ukrainian-speaking team.
+- **«Another language»** — The key accepts any language tag, not just `en` and `uk`. Tell me which one and I'll write it. Same rules: the prose switches, the structure stays English.

@@ -8,8 +8,7 @@ description: >
   decides how deeply the pipeline interviews you, which model tier its judgment agents run at, how
   strict the TDD gates are, how tasks execute and commit, and what language your documents are
   written in. Triggers on "config", "settings", "configure sdd", "tune the pipeline", "change the
-  judgment model", "set the interview depth", "write documents in Ukrainian", "/sdd:config",
-  "налаштування", "налаштуй sdd", "зміни модель", "глибина опитування", "мова документів".
+  judgment model", "set the interview depth", "write documents in another language", "/sdd:config".
   Creates the file with documented defaults FIRST (so you have a working config before answering
   anything), reads what already differs from the defaults, then asks six grouped questions and
   patches only the keys you confirm — preserving your comments, key order and unknown keys.

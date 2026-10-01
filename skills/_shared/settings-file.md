@@ -7,17 +7,17 @@
 > model precedence, `.size` scaling) stays in
 > [`../implement/references/settings.md`](../implement/references/settings.md).
 
-## TL;DR (короткий вступ українською)
+## TL;DR
 
-`.claude/sdd.local.md` — це per-project файл налаштувань пайплайна. Він **завжди створюється з
-задокументованими дефолтами** першим кроком шести скілів пайплайна (`interview`, `survey`,
-`roadmap`, `scaffold`, `specify`, `implement`) і самого `config`, тому людина отримує робочий
-конфіг ще до першого питання. У скіла з власним гейтом крок іде одразу після гейта, щоб відмова
-нічого не писала. Створення безумовне й ідемпотентне: файл є — читаємо, ніколи не перезаписуємо.
+`.claude/sdd.local.md` is the pipeline's per-project settings file. It is **always created with
+documented defaults** as the first step of six pipeline skills (`interview`, `survey`,
+`roadmap`, `scaffold`, `specify`, `implement`) and of `config` itself, so the user has a working
+config before the first question. In a skill with its own gate, the step runs right after the gate,
+so a refusal writes nothing. Creation is unconditional and idempotent: if the file exists, read it, never overwrite.
 
-**Значення міняє тільки [`config`](../config/SKILL.md)** (`/sdd:config`). Решта скілів файл
-створює і читає, але ніколи не пропонує щось у ньому крутити. Файл gitignored — комітиться лише
-правка `.gitignore`.
+**Only [`config`](../config/SKILL.md) changes values** (`/sdd:config`). The other skills create
+and read the file, but never offer to tweak anything in it. The file is gitignored — only the
+`.gitignore` edit is committed.
 
 ## Who creates it, who changes it, who reads it
 

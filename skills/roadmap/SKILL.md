@@ -10,8 +10,7 @@ description: >
   which decisions are still open and who owns them), the dependency graph that owns every edge,
   and the execution path: dependency-respecting waves that show what can run in parallel (e.g. in
   worktrees) and what must wait. Triggers on "roadmap", "break this down", "decompose the idea",
-  "what depends on what", "execution plan", "/sdd:roadmap", "роадмап", "розбий ідею на кроки",
-  "що від чого залежить", "що можна паралельно". Takes any scope — a whole product, an epic, or a
+  "what depends on what", "execution plan", "/sdd:roadmap", "what can run in parallel". Takes any scope — a whole product, an epic, or a
   single feature. Reads docs/idea-brief.md or a PRD (+ design canon and architecture map when they
   exist; neither is required). It decomposes and orders — it is NOT a prioritization scorecard and
   NOT a dated Gantt; specify/ship keep step statuses in sync as features move.
