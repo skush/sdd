@@ -130,8 +130,8 @@ And **`ux-flows`/`screens` auto-skip** for backend-only work, no confirmation ne
 
 | # | Skill | What it does | Reads → Produces |
 |---|---|---|---|
-| 0 | **survey** | Existing repo → scans once, persists the current architecture. Empty repo → level-adaptive foundation session → fixes the foundation + emits a scaffold `tasks.json` for `scaffold`. | the repo (+ `docs/idea-brief.md` if present) → `docs/architecture-map.md` (+ scaffold `tasks.json` on greenfield) |
-| 0b | **scaffold** | *Greenfield only:* materializes the skeleton the foundation planned — sequentially inline, anchored on the **skeleton smoke test** (builds + boots + empty test suite + migration tool) | `architecture-map.md` + `_scaffold/tasks.json` → the committed skeleton |
+| 0 | **survey** | Existing repo → scans once, persists the current architecture. Empty repo → level-adaptive foundation session (offers a **Node.js** or **.NET** backend preset first) → fixes the foundation + emits a scaffold `tasks.json` for `scaffold`. | the repo (+ `docs/idea-brief.md` if present) → `docs/architecture-map.md` (+ scaffold `tasks.json` on greenfield) |
+| 0b | **scaffold** | *Greenfield only:* materializes the skeleton the foundation planned — sequentially inline, anchored on the **skeleton smoke test** (builds + boots + empty test suite + migration tool); writes the conventions to `AGENTS.md` | `architecture-map.md` + `_scaffold/tasks.json` → the committed skeleton |
 | 0c | **design-system** | *Once per repo, before the first UI feature:* fixes the committed design canon — the drawing tool (Figma / Pencil / code), platform posture, tokens, component inventory | the repo (+ design MCPs) → `docs/design-system.md` |
 
 ### Backbone — the straight line (run in order)

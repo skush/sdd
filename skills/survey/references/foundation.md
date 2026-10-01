@@ -21,6 +21,8 @@ Calibration governs **depth + phrasing**, not the set of decisions — the same 
 
 ## G4 — The foundation choices (recommend a coherent default set)
 
+**Start with the stack presets.** Unless G3 surfaced a hard language/platform constraint, the first G4 question is the preset choice — «Node.js backend (Recommended)» / «.NET backend» / «Something else» — per [`./stack-presets.md`](./stack-presets.md). A chosen preset fills every row of the table below with its defaults (the user can still override any piece); «Something else» walks the table as written.
+
 Pick these together. In *guided-default* mode, present the whole set as one recommended bundle + a confirm; in *guided-explained* / *expert*, walk the ones that matter. Always recommend a **coherent** default (the pieces fit each other), and gloss each per ask-style.
 
 | Decision | What to pick | Default heuristic |
@@ -53,11 +55,13 @@ Emit `docs/features/_scaffold/tasks.json` (a repo-level, not per-feature, task s
       "acs": [], "dod": "the migration tool applies + reverts cleanly", "files_hint": ["migrations/"] },
     { "id": "S4", "title": "Add the CI workflow (build + test + lint)", "layer": "scaffold", "deps": ["S2"],
       "acs": [], "dod": "CI config is valid; the commands match the detected toolchain", "files_hint": [".github/" ] },
-    { "id": "S5", "title": "Write CLAUDE.md from the chosen conventions", "layer": "scaffold", "deps": ["S1"],
-      "acs": [], "dod": "conventions doc reflects the foundation map", "files_hint": ["CLAUDE.md"] }
+    { "id": "S5", "title": "Write AGENTS.md from the chosen conventions", "layer": "scaffold", "deps": ["S1"],
+      "acs": [], "dod": "AGENTS.md reflects the foundation map (commands, layout, conventions)", "files_hint": ["AGENTS.md"] }
   ]
 }
 ```
+
+**S5 writes `AGENTS.md`, not `CLAUDE.md`.** `AGENTS.md` is the one agent-instructions file Claude Code (v2.1.277+, when no `CLAUDE.md` exists), Cursor and Codex all read, so the conventions live in one place. Do not create a `CLAUDE.md` next to it: Claude Code reads a `CLAUDE.md` *instead of* `AGENTS.md`. Only if the user is on an older Claude Code, add a one-line `CLAUDE.md` containing `@AGENTS.md` (an import, so the content still lives in `AGENTS.md`).
 
 **The skeleton smoke test is the TDD anchor** — canonical in [`../../scaffold/SKILL.md`](../../scaffold/SKILL.md). Scaffold tasks have no feature AC, so `scaffold` anchors the red→green on the structural smoke test: RED = «the project does not build / boot / the tooling doesn't run», GREEN = «build + boot + empty test suite + migration tool all succeed». That keeps the discipline meaningful for structural work (no per-folder TDD theatre). `scaffold` reads the foundation map for the exact conventions to materialize to.
 
