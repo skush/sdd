@@ -8,8 +8,7 @@ description: >
   (Figma MCP / Pencil MCP / code-only markdown), the platform posture (mobile-first /
   desktop-first / responsive), the token source, and the reusable component inventory. Once per
   repo, like survey. Triggers on "set up the design system", "design canon", "which design tool",
-  "establish the UI foundation", "/sdd:design-system", "налаштуй дизайн-систему",
-  "дизайн-канон проєкту", "яким інструментом малюємо". Read by ux-flows (posture) and screens
+  "establish the UI foundation", "/sdd:design-system". Read by ux-flows (posture) and screens
   (tool + inventory); implement registers NEW components back into it. On tool: pencil it also
   bootstraps the .pen library itself — creates the file, walks the user through opening it, and
   seeds tokens + a foundations frame via the pen-keeper agent. Utility — not a backbone stage;

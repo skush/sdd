@@ -8,8 +8,7 @@ description: >
   docs/architecture-map.md (mode: greenfield-bootstrap) plus docs/features/_scaffold/tasks.json
   and builds the real project structure: folders + entry point, test harness + smoke test,
   migration tooling, CI, the conventions doc. Triggers on "scaffold the skeleton", "materialize
-  the skeleton", "bootstrap the project skeleton", "/sdd:scaffold", "матеріалізуй скелет",
-  "розгорни скелет проєкту", "збудуй каркас". Runs the S-tasks sequentially inline (no
+  the skeleton", "bootstrap the project skeleton", "/sdd:scaffold". Runs the S-tasks sequentially inline (no
   team/workflow orchestration), anchored on the skeleton smoke test — builds + boots + empty
   test suite runs + migration tool runs — commits, and hands off to /sdd:specify. Hard-refuses
   without the greenfield foundation: run survey first.

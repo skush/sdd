@@ -9,8 +9,7 @@ description: >
   written to docs/features/{slug}/screens.md between api and tasks. Draws per the design-system
   tool: Figma MCP into the canon file, Pencil MCP into screens.pen, or inline markdown wireframes
   (code mode — also the degradation when an MCP is unavailable). Triggers on "screens for {slug}",
-  "screen states for {slug}", "draw the screens", "mockups for {slug}", "/sdd:screens {slug}",
-  "екрани для {slug}", "стани екранів {slug}", "намалюй екрани". States derive from §5 ACs +
+  "screen states for {slug}", "draw the screens", "mockups for {slug}", "/sdd:screens {slug}". States derive from §5 ACs +
   sad.md §6 branches + contract error responses; tasks/implement/review read ONLY the manifest.
   Hard-refuse if sad.md is missing; skipped when target_surfaces declares no UI surface.
 ---
