@@ -1,5 +1,7 @@
 # SDD — Spec-Driven Development for Claude Code
 
+> **Fork of [genkovich/sdd](https://github.com/genkovich/sdd)** (MIT, © Kyrylo Genkov). This fork translates all text to English, scaffolds `AGENTS.md` instead of `CLAUDE.md`, and offers Node.js / .NET backend presets on new projects.
+
 A self-contained Claude Code plugin that carries a feature from a one-line idea to
 **reviewed, verified, shipped** code through **23 atomic, stack-agnostic skills** and a
 **TDD implementation engine** — with a living decomposition roadmap above the per-feature flow and a
@@ -49,21 +51,21 @@ flowchart LR
 **Claude Code** — native plugin:
 
 ```text
-/plugin marketplace add genkovich/sdd
-/plugin install sdd@sdd
+/plugin marketplace add skush/sdd
+/plugin install sdd@sdd-skush
 ```
 
-After updating to a new release: re-run `/plugin install sdd@sdd`, then `/reload-plugins`.
+After a new release (the `version` in the manifests was bumped): `/plugin marketplace update sdd-skush`, then `/plugin update sdd@sdd-skush` (or `claude plugin update sdd@sdd-skush` from a shell), then `/reload-plugins`.
 
 **Codex CLI** — `cd` into your project first (installs into `.agents/skills/` + `.codex/agents/`
 of the current directory; `--global` for `~`, `--prefix DIR` for an arbitrary directory):
 
 ```sh
 cd your-project
-curl -fsSL https://raw.githubusercontent.com/genkovich/sdd/main/install.sh | bash -s -- codex
+curl -fsSL https://raw.githubusercontent.com/skush/sdd/main/install.sh | bash -s -- codex
 ```
 
-Restart codex and type `$sdd-specify`. Alternative: `codex plugin marketplace add genkovich/sdd`,
+Restart codex and type `$sdd-specify`. Alternative: `codex plugin marketplace add skush/sdd`,
 then **inside codex** `/plugins` → the `sdd` tab → **Install plugin** — registers the
 **unprefixed** names (`$specify`) instead of the script's `$sdd-specify`. **Pick one path, not
 both** — running both shows every skill twice. Undo: `install.sh codex --uninstall` (script) or
@@ -75,7 +77,7 @@ dot-directories it writes are hidden by default in Explorer.
 
 ```sh
 cd your-project
-curl -fsSL https://raw.githubusercontent.com/genkovich/sdd/main/install.sh | bash -s -- cursor
+curl -fsSL https://raw.githubusercontent.com/skush/sdd/main/install.sh | bash -s -- cursor
 ```
 
 How every Claude-specific mechanism — `AskUserQuestion`, subagents, `/clear`, the implement
