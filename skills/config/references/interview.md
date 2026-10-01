@@ -1,4 +1,4 @@
-# The config interview — six questions, three calls, 21 of 25 keys
+# The config interview — six questions, three calls, 22 of 26 keys
 
 > **Reference-only.** Read by [`../SKILL.md`](../SKILL.md) steps 3 and 5. Every question here is
 > phrased per [`../../_shared/ask-style.md`](../../_shared/ask-style.md): English, action-form
@@ -28,9 +28,9 @@
 | 3 | 2 | How strict should the tests and gates be? | `tdd` · `stop_on_red` · `max_red_retries` · `gate_lint` · `gate_vet` · `require_integration` |
 | 4 | 2 | How should tasks execute and commit? | `team_mode` · `workflow_mode` · `max_parallel_agents` · `isolation` · `auto_commit` · `branch_strategy` |
 | 5 | 3 | How deeply should the pipeline interview you? | `interview_depth` |
-| 6 | 3 | Which language are the documents written in? | `artifact_language` |
+| 6 | 3 | Which language do you work in? | `language` · `artifact_language` |
 
-**21 keys.** The remaining four — `cmd_test_unit`, `cmd_test_integration`, `cmd_lint`, `cmd_vet` —
+**22 keys.** The remaining four — `cmd_test_unit`, `cmd_test_integration`, `cmd_lint`, `cmd_vet` —
 are **never asked**. Empty means the command-detection cascade reads the repo's own Makefile,
 package scripts and language manifests, which is a better answer than a command pinned once and
 left to rot. They stay in the derived list of the step-6 output, named as «left empty for
@@ -139,17 +139,19 @@ autodetect».
 - **«Easy»** — `interview_depth: easy`. I ask only what can't be inferred from context; I decide the rest myself and collect it in an assumptions ledger you review as one block at the end. The fastest pass. The obvious risk: an assumption you didn't notice in the list travels on into the spec.
 - **«Deep»** — `interview_depth: hard`. I walk every decision, put the trade-off on the surface every time, and on `specify` run the full set of ideation agents (market researcher, strategist, analyst, devil's advocate). The most complete result and the longest dialogue. Worth it on a feature where a mistake is expensive.
 
-### Q6 — document language
+### Q6 — working language
 
-> **CONTEXT.** `artifact_language` sets the language the **prose** of pipeline documents is written in:
-> the spec, the architecture document, ADRs, the data model, tasks, the test plan, reviews, the
-> changelog. The structure always stays English — section headings, frontmatter keys, verdicts,
-> tracker states, Mermaid keywords, the machine fields of `tasks.json` and
-> `openapi.yaml`. **WHY IT MATTERS.** This is a choice for the people who will read these documents,
-> not for the tools. The override rule is simple: an existing file's language always wins over the
-> setting, and a new file matches its neighbours in its feature folder — what's already written is
-> never retro-translated. **READ OPTIONS.**
+> **CONTEXT.** `language` sets the language you **work** in on this project: every question and
+> answer option, the explanations, the handoff block at the end of each stage, and the prose of the
+> documents (spec, architecture document, ADRs, data model, tasks, test plan, reviews, changelog).
+> The structure always stays English — section headings, frontmatter keys, verdicts, tracker
+> states, Mermaid keywords, the machine fields of `tasks.json` and `openapi.yaml` — because later
+> stages search for them by exact text. **WHY IT MATTERS.** It's per project, so one repo can run in
+> Ukrainian and another in English. Switching later is safe: the next stage uses the new language,
+> and documents already written are never retro-translated. New projects start from the global
+> default you pick in Claude Code's `/config` (the SDD «Default language» option). **READ OPTIONS.**
+> `<put the project's current language first, marked «(Recommended)»>`
 
-- **«English» (Recommended)** — `artifact_language: en`. All prose in English. The default, and the right choice if anyone outside a single-language team will read these documents, or if the repository is already in English.
-- **«Ukrainian»** — `artifact_language: uk`. Prose in Ukrainian: paragraphs, table cells, diagram labels, the text fields of `tasks.json`. Section headings, machine tokens and keys stay English, so everything the skills and validators read keeps working unchanged. Pick this when the specs are read by a Ukrainian-speaking team.
-- **«Another language»** — The key accepts any language tag, not just `en` and `uk`. Tell me which one and I'll write it. Same rules: the prose switches, the structure stays English.
+- **«English»** — `language: en`, `artifact_language: ""`. Questions, handoffs and document prose all in English. The right choice if anyone outside a Ukrainian-speaking team will read the documents, or if the repository is already in English.
+- **«Ukrainian»** — `language: uk`, `artifact_language: ""`. Questions, answer options, handoffs and document prose all in Ukrainian. Headings, machine tokens and keys stay English, so everything the skills and validators read keeps working unchanged.
+- **«Chat in one language, documents in another»** — Ask which two: `language` gets the chat language, `artifact_language` the document language (e.g. chat `uk`, documents `en` for an English-language portfolio). Any language tag works, not just `en` and `uk`.

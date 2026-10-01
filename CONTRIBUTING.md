@@ -5,7 +5,7 @@
 A skill lives in `skills/<name>/` and is the **source of truth** for its stage.
 
 1. **`SKILL.md` is a short spine.** Frontmatter (`name` + a third-person `description` with
-   3–5 English trigger phrases) then a numbered Protocol. Keep it lean — target well
+   3–5 English trigger phrases plus 2–3 Ukrainian ones) then a numbered Protocol. Keep it lean — target well
    under ~140 lines. Heavy detail goes in `references/`; output scaffolds go in `templates/`.
 2. **Don't duplicate shared logic.** The 4-state Socratic machine, the clean-context critic,
    the size matrix, and the `AskUserQuestion` style live once in `skills/_shared/`. Reference

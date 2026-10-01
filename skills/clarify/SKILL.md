@@ -13,6 +13,7 @@ description: >
   in place) or DEFER it (→ §8 Open questions with owner+due). Output: an updated
   docs/features/{slug}/spec.md with every ambiguity resolved or deferred — none dangling.
   Hard-refuse if spec.md is missing.
+  Ukrainian triggers: "прояснити специфікацію", "знайди неоднозначності {slug}", "чи готова специфікація".
 ---
 
 # Skill: clarify

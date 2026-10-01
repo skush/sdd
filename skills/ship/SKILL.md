@@ -9,6 +9,7 @@ description: >
   "changelog for {slug}", "prepare {slug} for merge", "/sdd:ship {slug}". Re-runs the gate, runs the app/feature to confirm
   the spec's outcomes for real (not just green tests), drafts a changelog + PR body that link spec/
   AC/ADRs, and proposes the PR command for whatever forge the repo uses. Never auto-merges to main.
+  Ukrainian triggers: "відправ фічу {slug}", "створи PR для {slug}", "changelog для {slug}".
 ---
 
 # Skill: ship

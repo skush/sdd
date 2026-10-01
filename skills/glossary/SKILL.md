@@ -16,6 +16,7 @@ description: >
   cache) — those are not domain terms. Output: created/edited CONTEXT.md. Runs anytime, no
   input gate; specify, clarify, design and api read its ## Glossary as the canonical source
   of role and domain-term names.
+  Ukrainian triggers: "що означає {X}".
 ---
 
 # Skill: glossary

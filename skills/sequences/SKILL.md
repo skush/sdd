@@ -11,6 +11,7 @@ description: >
   flow from templates/sequence.md with generic participants, walks them Socratically one flow at
   a time, and writes confirmed blocks into sad.md §6 — they inform data-model indexes downstream.
   Hard-refuse if sad.md is missing → run `design {slug}` first.
+  Ukrainian triggers: "діаграми послідовності {slug}", "sequence для {slug}", "намалюй потік {slug}".
 ---
 
 # Skill: sequences

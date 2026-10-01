@@ -11,6 +11,7 @@ description: >
   openapi if present), writes docs/features/{slug}/tasks/{_epic,tracker,<task>}.md AND
   docs/features/{slug}/tasks.json. Tracker export to any issue tracker is optional and
   tool-neutral. Hard-refuses if spec.md or sad.md or an Accepted ADR is missing.
+  Ukrainian triggers: "розбий на задачі {slug}", "декомпозиція {slug}", "список задач".
 ---
 
 # Skill: tasks

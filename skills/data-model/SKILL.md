@@ -13,6 +13,7 @@ description: >
   report. Greenfield-first; brownfield delta via --mode brownfield; drift-only via --drift-only.
   Hard-refuses if spec.md or sad.md is missing. Stack-agnostic: detects and FOLLOWS the repo's DB +
   migration conventions and domain layer — it imposes no DB philosophy and writes no rules file.
+  Ukrainian triggers: "модель даних для {slug}", "схема для {slug}", "згенеруй міграції".
 ---
 
 # Skill: data-model

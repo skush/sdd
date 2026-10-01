@@ -9,6 +9,7 @@ description: >
   changes for {slug}", "review the diff for {slug}", "is {slug} ready to ship", "/sdd:review {slug}". Dispatches the reviewer
   subagent over the whole feature diff (stage 1 spec/AC compliance, stage 2 quality), collects
   cited findings, and resolves each with you. Hard-refuses if the feature isn't implemented yet.
+  Ukrainian triggers: "переглянь зміни {slug}", "код-рев'ю фічі {slug}", "рев'ю diff".
 ---
 
 # Skill: review

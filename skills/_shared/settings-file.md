@@ -26,6 +26,7 @@ and read the file, but never offer to tweak anything in it. The file is gitignor
 | **Create** (unconditional, idempotent) | the six pipeline skills — `interview` · `survey` · `roadmap` · `scaffold` · `specify` · `implement` — **and `config` itself** | first protocol step: absent → write the template below + patch `.gitignore`; present → read, never overwrite. `interview` is subordinate to its own write gate — outside a git repo it writes nothing, settings included. |
 | **Change values** (the only writer of existing keys) | [`config`](../config/SKILL.md) | asks, then patches confirmed keys in place. No other skill ever offers to tune a value. |
 | **Read** `interview_depth` | `specify` · `clarify` · `design` · `sequences` · `ux-flows` | pre-selects the depth dial → [`interview-depth.md`](./interview-depth.md) |
+| **Read** `language` | every skill that asks questions or prints a handoff, and every artifact-writing skill (unless `artifact_language` overrides) | the working language → [`ask-style.md`](./ask-style.md) |
 | **Read** `artifact_language` | every artifact-writing skill | the prose language of pipeline documents → [`artifact-language.md`](./artifact-language.md) |
 | **Read** `judgment_model` / `model_<role>` / `effort_<role>` | every skill that dispatches an agent | the tier each agent runs at → [`agent-roster.md`](./agent-roster.md) |
 | **Read** the engine keys (`tdd`, `team_mode`, `workflow_mode`, `max_parallel_agents`, `isolation`, `stop_on_red`, `max_red_retries`, `gate_*`, `require_integration`, `auto_commit`, `branch_strategy`, `cmd_*`) | `implement` (`cmd_*` + gates also `fix`) | → [`../implement/references/settings.md`](../implement/references/settings.md) |
@@ -62,7 +63,8 @@ rides along in whatever commit the stage proposes.
 
 ```yaml
 interview_depth: medium    # easy | medium | hard — plugin-wide default for specify/clarify/design (see _shared/interview-depth.md)
-artifact_language: en      # en | uk (any language tag) — language pipeline DOCUMENTS are written in; headings + machine tokens stay English (see _shared/artifact-language.md)
+language: en               # en | uk (any language tag) — the language you WORK in: questions, answer options, handoffs, and document prose (see _shared/ask-style.md)
+artifact_language: ""      # "" = same as language; set en | uk (any tag) only to write DOCUMENTS in a different language than you chat in (see _shared/artifact-language.md)
 tdd: true                  # enforce red→green→refactor
 team_mode: false           # true → agent team via TeamCreate
 workflow_mode: auto        # auto → dynamic Workflow; off → never
@@ -91,7 +93,8 @@ effort_reviewer: high
 ## What each key does
 
 - **`interview_depth`** — `easy | medium | hard`. The plugin-wide default for the **Q&A skills'** depth dial (`specify` / `clarify` / `design`), which governs how much each skill decides on its own vs. interrogates you (question volume, autonomy, which ideation analyses run, per-diagram confirm vs. proceed). It only **pre-selects** the recommended option in each skill's opening depth question — the user can still override per run, or pass `--depth=` to skip the question. It does **not** affect AC-completeness (that's a floor at every level). Full semantics → `skills/_shared/interview-depth.md`.
-- **`artifact_language`** — `en | uk` (any language tag; default `en`). The language **pipeline documents** are written in — read by **every artifact-writing skill** (spec, SAD, ADRs, sequences, data-model, contracts, tasks, test plan, review/fix records, changelog, roadmap, CONTEXT.md). Only **prose** switches (paragraphs, table cells, diagram labels, the prose fields of `tasks.json` / `openapi.yaml`); **structure stays English** — section headings verbatim from the template, frontmatter keys+values, verdict literals, tracker states, Mermaid keywords, machine fields. Precedence when editing: an existing file's language wins over the setting, a new file matches its feature-folder neighbours, never retro-translate. Full rule + the never-translate token list → `skills/_shared/artifact-language.md`.
+- **`language`** — `en | uk` (any language tag; default `en`). The language you **work** in: every question and answer option (`AskUserQuestion`), explanations, the handoff block, and — unless `artifact_language` overrides it — the prose of every pipeline document. Machine tokens, section headings, commands and file paths stay English in every language. Set it per project with `/sdd:config`; new projects are seeded from the plugin's global `default_language` option (Claude Code `/config`). Switching mid-project is fine: the next stage uses the new language, documents already written stay as they are. Full rule → `skills/_shared/ask-style.md`.
+- **`artifact_language`** — `""` (default: same as `language`) or `en | uk` (any language tag). An optional override for the language **pipeline documents** are written in, for «chat in one language, documents in another» — read by **every artifact-writing skill** (spec, SAD, ADRs, sequences, data-model, contracts, tasks, test plan, review/fix records, changelog, roadmap, CONTEXT.md). Only **prose** switches (paragraphs, table cells, diagram labels, the prose fields of `tasks.json` / `openapi.yaml`); **structure stays English** — section headings verbatim from the template, frontmatter keys+values, verdict literals, tracker states, Mermaid keywords, machine fields. Precedence when editing: an existing file's language wins over the setting, a new file matches its feature-folder neighbours, never retro-translate. Full rule + the never-translate token list → `skills/_shared/artifact-language.md`.
 - **`tdd`** — when false, RED is skipped and the engine writes code directly (warns; you lose the safety net).
 - **`team_mode` / `workflow_mode`** — feed the `implement` decision tree. `team_mode` wins when both could apply. Both need Claude Code (`TeamCreate` / `Workflow`); on Codex CLI and Cursor they degrade to sequential → `skills/_shared/tool-adapters.md`.
 - **`max_parallel_agents`** — fan-out cap for team/workflow modes. `1` forces sequential.
@@ -128,6 +131,6 @@ the plugin has never heard of. So:
 
 ## Reading semantics
 
-Unknown keys are ignored (forward-compatible). A missing key falls back to the default above. A
+Unknown keys are ignored (forward-compatible). A missing key falls back to the default above — so a file created before `language` existed reads as `language: en` until `/sdd:config` sets it. **Resolving the two language keys:** working language = `language` (missing → `en`); document language = `artifact_language` when non-empty, else `language`. A
 malformed file → warn and fall back to all-defaults rather than failing the run; a **reader** never
 rewrites the file to repair it.

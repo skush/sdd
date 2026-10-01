@@ -13,6 +13,7 @@ description: >
   confirms size + route in ONE question, and writes the one-line .size and .route files — the
   source of truth; the feature_size: frontmatter mirrors in spec.md and sad.md are re-synced
   to it on every (re)classification.
+  Ukrainian triggers: "класифікуй розмір {slug}", "який розмір фічі", "XS чи M".
 ---
 
 # Skill: classify-size
