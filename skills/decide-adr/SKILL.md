@@ -13,6 +13,7 @@ description: >
   fills context / drivers / considered options / outcome / honest consequences. Supports a
   Proposed → Accepted review flow. Output: docs/features/{slug}/adr/NNNN-{title}.md.
   For decisions made live with the user, use `design` — it spawns ADRs inline (Accepted).
+  Ukrainian triggers: "задокументуй рішення", "ADR на {тему}".
 ---
 
 # Skill: decide-adr

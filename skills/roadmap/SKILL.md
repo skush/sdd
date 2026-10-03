@@ -14,6 +14,7 @@ description: >
   single feature. Reads docs/idea-brief.md or a PRD (+ design canon and architecture map when they
   exist; neither is required). It decomposes and orders — it is NOT a prioritization scorecard and
   NOT a dated Gantt; specify/ship keep step statuses in sync as features move.
+  Ukrainian triggers: "роадмап", "розбий ідею на кроки", "що від чого залежить", "що можна паралельно".
 ---
 
 # Skill: roadmap
@@ -66,7 +67,7 @@ Whoever owns product direction (PM / lead / the solo maintainer).
 
 ## Protocol
 
-1. **Ensure the settings file (first thing, after this skill's own gate).** If `.claude/sdd.local.md` is
+1. **Ensure the settings file (first thing, after this skill's own gate).** When creating it, seed `language:` with «${user_config.default_language}» — the user's global default from Claude Code's `/config` (if that still reads as a literal `${…}` placeholder, e.g. on Codex/Cursor, write `en`). If `.claude/sdd.local.md` is
    absent, create it now from the canonical template — documented defaults + the self-documenting
    body — and patch `.gitignore`; if it exists, read it and never overwrite. The one procedure
    lives in [`../_shared/settings-file.md`](../_shared/settings-file.md). Creating is

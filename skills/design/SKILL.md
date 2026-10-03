@@ -13,6 +13,7 @@ description: >
   resolved section + its ADRs atomically, then runs a clean-context critic before finalizing.
   Brownfield: dispatches an Explore subagent to map the repo first. Hard-refuse if spec.md
   is missing; CONTEXT.md is optional (when present its Glossary is canonical).
+  Ukrainian triggers: "спроектуй архітектуру {slug}", "SAD для {slug}", "архітектурний документ {slug}".
 ---
 
 # Skill: design

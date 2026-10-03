@@ -12,6 +12,7 @@ description: >
   "/sdd:plan-tests {slug}".
   Output: docs/features/{slug}/test-plan.md (separate file for M+), or inline in spec.md for
   XS/S per the size matrix. Hard-refuse if spec.md is missing → run `specify {slug}` first.
+  Ukrainian triggers: "план тестів для {slug}", "як тестувати {slug}", "тест-план".
 ---
 
 # Skill: plan-tests

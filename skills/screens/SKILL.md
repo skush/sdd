@@ -12,6 +12,7 @@ description: >
   "screen states for {slug}", "draw the screens", "mockups for {slug}", "/sdd:screens {slug}". States derive from §5 ACs +
   sad.md §6 branches + contract error responses; tasks/implement/review read ONLY the manifest.
   Hard-refuse if sad.md is missing; skipped when target_surfaces declares no UI surface.
+  Ukrainian triggers: "екрани для {slug}", "стани екранів {slug}", "намалюй екрани".
 ---
 
 # Skill: screens

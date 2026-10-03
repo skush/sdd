@@ -13,6 +13,7 @@ description: >
   "rip this apart", "/sdd:interview {slug}". Runs 3 phases (understand intent → surface tradeoffs and weak spots → propose new
   angles) via AskUserQuestion, ends with the brief on disk + the next step. Optional — reach for
   it whenever the idea itself isn't settled yet; `roadmap` needs its output.
+  Ukrainian triggers: "бриф ідеї", "погрилити", "розбери цю ідею", "розʼєби".
 ---
 
 # Skill: interview
@@ -65,7 +66,7 @@ the handoff which sections changed.
 ## Protocol
 
 1. **Resolve the write gate above first** (silently — one `git rev-parse`, no question about it).
-   **Ensure the settings file (first thing, after this skill's own gate).** If `.claude/sdd.local.md` is absent,
+   **Ensure the settings file (first thing, after this skill's own gate).** When creating it, seed `language:` with «${user_config.default_language}» — the user's global default from Claude Code's `/config` (if that still reads as a literal `${…}` placeholder, e.g. on Codex/Cursor, write `en`). If `.claude/sdd.local.md` is absent,
    create it now from the canonical template — documented defaults + the self-documenting body —
    and patch `.gitignore`; if it exists, read it and never overwrite. The one procedure lives in
    [`../_shared/settings-file.md`](../_shared/settings-file.md). Creating is unconditional;

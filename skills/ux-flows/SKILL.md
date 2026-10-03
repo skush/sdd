@@ -12,6 +12,7 @@ description: >
   Socratic pass confirms each flow in prose, never raw mermaid. Feeds design (target-surface
   evidence), sequences (SCR alignment), screens (the inventory) and plan-tests (e2e-through-UI
   paths). Hard-refuse if spec.md is missing; skipped for features with no human-facing UI.
+  Ukrainian triggers: "юзер-флоу для {slug}", "потік екранів {slug}", "намалюй флоу користувача".
 ---
 
 # Skill: ux-flows

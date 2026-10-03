@@ -8,12 +8,13 @@ description: >
   decides how deeply the pipeline interviews you, which model tier its judgment agents run at, how
   strict the TDD gates are, how tasks execute and commit, and what language your documents are
   written in. Triggers on "config", "settings", "configure sdd", "tune the pipeline", "change the
-  judgment model", "set the interview depth", "write documents in another language", "/sdd:config".
+  judgment model", "set the interview depth", "work in Ukrainian", "write documents in another language", "/sdd:config".
   Creates the file with documented defaults FIRST (so you have a working config before answering
   anything), reads what already differs from the defaults, then asks six grouped questions and
   patches only the keys you confirm — preserving your comments, key order and unknown keys.
   Never touches the pipeline's artifacts; the settings file is gitignored, only the .gitignore
   patch is committed.
+  Ukrainian triggers: "налаштування", "налаштуй sdd", "зміни модель", "глибина опитування", "мова документів".
 ---
 
 # Skill: config
@@ -40,7 +41,7 @@ Whoever owns the repo's setup — usually the lead who runs the pipeline first, 
 
 ## Protocol
 
-1. **Ensure the settings file (first thing, after this skill's own gate).** If `.claude/sdd.local.md`
+1. **Ensure the settings file (first thing, after this skill's own gate).** When creating it, seed `language:` with «${user_config.default_language}» — the user's global default from Claude Code's `/config` (if that still reads as a literal `${…}` placeholder, e.g. on Codex/Cursor, write `en`). If `.claude/sdd.local.md`
    is absent, create it now from the canonical template — documented defaults + the self-documenting body — and
    patch `.gitignore`; if it exists, read it and never overwrite. The one procedure lives in
    [`../_shared/settings-file.md`](../_shared/settings-file.md). Creating is unconditional;
@@ -68,7 +69,7 @@ Whoever owns the repo's setup — usually the lead who runs the pipeline first, 
 5. **Ask the six grouped questions in three `AskUserQuestion` calls.** Questions are grouped by
    **decision**, not by key — a person tunes «how strict are the gates», not `gate_vet`. The six:
    host confirmation · model tier · strictness and gates · execution and commits · interview depth ·
-   document language. Together they cover **21 of the 25 keys**. The four `cmd_*` keys are **not
+   document language. Together they cover **22 of the 26 keys**. The four `cmd_*` keys are **not
    asked**: empty means the detection cascade reads the repo's own Makefile / package scripts /
    manifests, which is the better answer than a pinned command that rots. Verbatim wording, the
    options, and the question → keys map → [`./references/interview.md`](./references/interview.md).

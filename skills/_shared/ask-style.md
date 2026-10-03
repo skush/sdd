@@ -48,9 +48,13 @@ If a question reads like a config dump or a spec excerpt, it's wrong. Write it a
 
 ## Language
 
-- **English throughout** — labels + descriptions. Technical identifiers stay in their original form (ADR, JSONB, JWT, UUID, FK, OpenAPI) — they are names. The *actions* are plain-English verb phrases that say what happens next («Accept as is», «Rewrite it», «Move to §11 OQ», «Delete it»).
+- **The project's working language throughout** — question, labels and descriptions are written in `language` from `.claude/sdd.local.md` (missing → `en`; resolution → [`settings-file.md`](./settings-file.md)). Technical identifiers stay in their original form in every language (ADR, JSONB, JWT, UUID, FK, OpenAPI) — they are names. The *actions* are verb phrases in that language that say what happens next:
+  - `en`: «Accept as is», «Rewrite it», «Move to open questions», «Drop it», «Record as ADR».
+  - `uk`: «Прийняти як є», «Виправити», «Винести у відкрите питання», «Викинути», «Зафіксувати як ADR».
+  - Any other language tag: the same five actions, translated naturally.
+- «(Recommended)» stays as written in every language, so the marker is recognisable.
 - Glossary roles and domain-invariant **names** (natural-language phrases like «no published lessons») are allowed — they are business terms.
-- This section governs **conversation** (question + option text) only. The language documents are *written in* is a separate per-project switch — `artifact_language` in `.claude/sdd.local.md` → [`artifact-language.md`](./artifact-language.md).
+- Documents follow the same `language` unless the optional `artifact_language` override is set → [`artifact-language.md`](./artifact-language.md).
 
 ## Forbidden
 

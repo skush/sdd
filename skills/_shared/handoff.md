@@ -24,6 +24,10 @@ This removes the main pain point: «the output is messy, hard to copy and hard t
 
 ---
 
+**Language.** The bullet prose in the block follows the project's working `language` (see
+[`ask-style.md`](./ask-style.md)); the three section labels (*What I did* / *Review before
+continuing* / *Run next*), file paths and commands stay exactly as below in every language.
+
 ## The block (sectioned format)
 
 ```md

@@ -424,6 +424,17 @@ def main() -> int:
         check("artifact_language" in (ROOT / rel).read_text(),
               f"{rel} documents artifact_language",
               f"{rel} never mentions 'artifact_language' — the settings doc and the shared rule must both carry it")
+    # The working-language key (`language`, en|uk) drives questions, handoffs and document prose;
+    # the settings doc, the conversation rule, the handoff rule and the config interview must all
+    # carry it, and the plugin manifest must declare the global default option it is seeded from.
+    for rel in ("skills/_shared/settings-file.md", "skills/_shared/ask-style.md",
+                "skills/_shared/handoff.md", "skills/config/references/interview.md"):
+        check("`language`" in (ROOT / rel).read_text() or "language:" in (ROOT / rel).read_text(),
+              f"{rel} documents the working `language` key",
+              f"{rel} never mentions the `language` key — the per-project language switch must be threaded through it")
+    check("default_language" in (ROOT / ".claude-plugin" / "plugin.json").read_text(),
+          "plugin.json declares the default_language userConfig option",
+          ".claude-plugin/plugin.json lost userConfig.default_language — new projects can't be seeded with the global default language")
     ARTIFACT_WRITERS = ("interview", "specify", "clarify", "glossary", "design", "decide-adr", "sequences",
                         "data-model", "api", "tasks", "plan-tests", "review", "ship", "fix",
                         "roadmap", "survey", "design-system", "ux-flows", "screens")

@@ -234,7 +234,8 @@ This is exactly what lands on disk, defaults and all:
 
 ```yaml
 interview_depth: medium    # easy | medium | hard — plugin-wide default for specify/clarify/design
-artifact_language: en      # en | uk (any language tag) — language pipeline DOCUMENTS are written in
+language: en               # en | uk (any language tag) — the language you WORK in: questions, handoffs, document prose
+artifact_language: ""      # "" = same as language; set only to write DOCUMENTS in a different language
 tdd: true                  # enforce red→green→refactor
 team_mode: false           # true → agent team via TeamCreate
 workflow_mode: auto        # auto → dynamic Workflow; off → never
@@ -265,7 +266,8 @@ Grouped the way `/sdd:config` asks about them — one answer per group, several 
 | Group | Keys | Default | What it decides |
 |---|---|---|---|
 | **Interview depth** | `interview_depth` | `medium` | how many questions `specify` / `clarify` / `design` ask before deciding for you; never changes *what* is covered |
-| **Document language** | `artifact_language` | `en` | the prose language of every pipeline document; headings, frontmatter and machine tokens stay English |
+| **Working language** | `language` (+ global `default_language` plugin option) | `en` | the language of every question, answer option, handoff and document prose, per project; new projects start from the global default you pick in Claude Code's `/config`. Headings, frontmatter and machine tokens stay English |
+| **Document language** | `artifact_language` | `""` (= `language`) | optional override: write the documents in a different language than you work in |
 | **Model tier** | `judgment_model`, `model_test_author`, `model_implementer`, `model_reviewer`, `effort_test_author`, `effort_implementer`, `effort_reviewer` | judgment `opus`, execution `sonnet` | which tier the judgment agents and the execution agents run at. `judgment_model` is one switch for all five judges; `opus` is a floor, not a pin |
 | **Strictness & gates** | `tdd`, `stop_on_red`, `max_red_retries`, `gate_lint`, `gate_vet`, `require_integration` | `true` / `true` / `3` / `true` / `true` / `auto` | whether the failing test comes first, what a surviving red does to the run, and which tiers the per-task gate runs |
 | **Execution & commits** | `team_mode`, `workflow_mode`, `max_parallel_agents`, `isolation`, `auto_commit`, `branch_strategy` | `false` / `auto` / `3` / `worktree` / `per_task` / `feature` | sequential vs. agent team vs. dynamic workflow, how wide it fans out, and how finely the work commits. `team_mode` / `workflow_mode` need Claude Code — on Codex CLI and Cursor they clamp to sequential |

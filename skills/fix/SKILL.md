@@ -13,6 +13,7 @@ description: >
   patch the wording) / no AC covers it (gap — add one, marked added-by-fix). Works on a repo
   with no specs at all (soft mode — code-first, recommends survey after). Writes a fix record
   under docs/features/{slug}/_fixes/ and commits with an SDD-Fix trailer.
+  Ukrainian triggers: "полагодь баг", "виправ багу", "регресія в {slug}", "чому зламалось".
 ---
 
 # Skill: fix

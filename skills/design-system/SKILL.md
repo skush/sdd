@@ -13,6 +13,7 @@ description: >
   bootstraps the .pen library itself — creates the file, walks the user through opening it, and
   seeds tokens + a foundations frame via the pen-keeper agent. Utility — not a backbone stage;
   run it before the first UI feature (ux-flows recommends it when absent).
+  Ukrainian triggers: "налаштуй дизайн-систему", "дизайн-канон проєкту", "яким інструментом малюємо".
 ---
 
 # Skill: design-system

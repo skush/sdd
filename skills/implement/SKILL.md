@@ -11,6 +11,7 @@ description: >
   commands stack-agnostically, builds a dependency DAG, and runs one of three modes — sequential
   single-agent TDD, an agent team (TeamCreate), or a dynamic Workflow — chosen from settings +
   DAG shape with graceful fallback. Hard-refuses if tasks.json is missing.
+  Ukrainian triggers: "імплементуй {slug}", "реалізуй фічу {slug}", "напиши код за задачами".
 ---
 
 # Skill: implement
@@ -33,7 +34,7 @@ Tech Lead drives; the engine runs the cycle. The three subagents ship with the p
 ## Protocol
 
 1. **Preconditions.** Verify `tasks.json` exists and parses; load the upstream artifacts list. Detail → [`./references/inputs.md`](./references/inputs.md).
-2. **Ensure the settings file (first thing, after this skill's own gate).** If `.claude/sdd.local.md` is absent, create it now from the canonical template — documented defaults + the self-documenting body — and patch `.gitignore`; if it exists, read it and never overwrite. The one procedure lives in [`../_shared/settings-file.md`](../_shared/settings-file.md). Creating is unconditional; **changing values is only ever offered by [`config`](../config/SKILL.md)**. Say one line: «`.claude/sdd.local.md` created with documented defaults — `/sdd:config` to tune it». Which keys this engine then reads, and how model + effort resolve at dispatch → [`./references/settings.md`](./references/settings.md).
+2. **Ensure the settings file (first thing, after this skill's own gate).** When creating it, seed `language:` with «${user_config.default_language}» — the user's global default from Claude Code's `/config` (if that still reads as a literal `${…}` placeholder, e.g. on Codex/Cursor, write `en`). If `.claude/sdd.local.md` is absent, create it now from the canonical template — documented defaults + the self-documenting body — and patch `.gitignore`; if it exists, read it and never overwrite. The one procedure lives in [`../_shared/settings-file.md`](../_shared/settings-file.md). Creating is unconditional; **changing values is only ever offered by [`config`](../config/SKILL.md)**. Say one line: «`.claude/sdd.local.md` created with documented defaults — `/sdd:config` to tune it». Which keys this engine then reads, and how model + effort resolve at dispatch → [`./references/settings.md`](./references/settings.md).
 3. **Detect commands.** Run the stack-agnostic cascade (settings override → Makefile → package scripts → language manifests → Docker probe for the integration tier) to resolve unit / integration / lint / vet commands. Print what was detected. → [`./references/command-detection.md`](./references/command-detection.md).
 4. **Build the DAG.** Parse `tasks.json`, validate `deps` is acyclic, topologically sort into phases (Kahn). Compute `task_count`, `longest_chain`, `parallel_width`. Mark serialization lanes (`layer: migration`; tasks with overlapping `files_hint`).
 5. **Pick the mode.** Run the decision tree (below; full form → [`./references/decision-tree.md`](./references/decision-tree.md)). Apply the guards.

@@ -15,6 +15,7 @@ description: >
   sequences?) and a reconcile mode. Hard-refuse if data-model.md is missing AND the feature
   changes the schema → run `data-model {slug}` first; on a legal no-schema-change skip it
   derives from the existing schema instead.
+  Ukrainian triggers: "контракт API для {slug}", "OpenAPI для {slug}", "опиши ендпоінти".
 ---
 
 # Skill: api
